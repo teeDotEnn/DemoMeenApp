@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Place Order</title>
+        <style>
+            ul{
+                list-style-type: none;
+            }
+            .singleRow
+            {
+                float: left;
+                width: 40%;
+            }
+            .tripleRow
+            {
+                float: left;
+                width: 30%;
+            }
+            form{
+                width: 70%;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="POST" action='/submit'>
+            <% if(confirmation != ""){%>
+                <h1><%=confirmation%></h1>
+            <%}%>
+            Here is your order:
+            <ul>
+            
+                <li>Name: <%=data.fName +" "+ data.lName%></li>
+                <li>Address: <%=data.streetNumber +" "+ data.streetName%></li>
+                <li>Email: <%=data.email%></li>
+                <li>Number of pizzas: <%=data.numberOfPizzas%></li>
+                <li>Size: <%=data.size%></li>
+                <li>Dough: <%=data.dough%></li>
+                <li>Sauce: <%=data.sauce%></li>
+                <li>Cheese: <%=data.cheese%></li>
+                <li>toppings: <% if(data.toppings != "" && Array.isArray(data.toppings)){
+                    for(let j = 0;j < data.toppings.length; j++)
+                    {%> <%= data.toppings[j] +", "%> 
+                    <%}}else{%>
+                        <%= data.toppings %>
+                    <%}%> 
+                </li>
+                
+                <li> Subtotal: 
+                    <% var subtotal = 0;
+                        switch(data.size){
+                            case "small":
+                                subtotal += 7;
+                                break;
+                            case "medium":
+                                subtotal += 12;
+                                break;
+                            case "large":
+                                subtotal += 17;
+                                break;
+                            case "extraLarge":
+                                subtotal += 25;
+                                break;
+                        }
+                        if(data.toppings != undefined)
+                        {
+                            if(data.toppings.length >2){
+                            subtotal += (data.toppings.length-2)*0.50;
+                            }
+                        }
+                    %>
+                    <%= ` $${subtotal}`%>
+                </li>
+                <li>
+                    Tax: <% var tax = subtotal * 0.13 %><%= ` $${tax}`%>
+                </li>
+                <li>
+                    Grand Total: <% var total = tax + subtotal%><%= total %>
+                </li>
+            </ul>
+            <% if(confirmation == ""){%>
+                <input type="submit" formaction="/checkout" value="Checkout"><p/>
+                <input type="submit" formaction="/makeChanges" value="Modify Order"></input>
+            <%}%>
+        
+        </form>
+    </body>
+</html>

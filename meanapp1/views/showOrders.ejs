@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>All orders</title>
+        <style>
+            table{
+                border:2px solid black;
+                border-collapse: collapse;
+
+            }
+            table td{
+                border: 1px solid black;
+                padding: 0.5em;
+                margin: 0.25em, 0.25em, 0.25em, 0.25em;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>OrderId</td>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>street number</td>
+                <td>street name</td>
+                <td>email</td>
+                <td>phone</td>
+                <td>number of pizzas</td>
+                <td>size</td>
+                <td>dough</td>
+                <td>sauce</td>
+                <td>cheese</td>
+                <td>toppings</td>
+            </tr>
+            <% for(let i = 0; i < orders.length ;i++){%>
+                <tr>
+                    <td><%= orders[i]._id %> </td>
+                    <td><%= orders[i].firstName%></td>
+                    <td><%= orders[i].lastName%></td>
+                    <td><%= orders[i].streetNumber%></td>
+                    <td><%= orders[i].streetName%></td>
+                    <td><%= orders[i].email%></td>
+                    <td><%= orders[i].telNumber%></td>
+                    <td><%= orders[i].numberOfPizzas%></td>
+                    <td><%= orders[i].size%></td>
+                    <td><%= orders[i].dough%></td>
+                    <td><%= orders[i].sauce%></td>
+                    <td><%= orders[i].cheese%></td>
+                    <td> <% if(orders[i].toppings != undefined){
+                                for(let j = 0;j < orders[i].toppings.length; j++){%> 
+                                    <%= orders[i].toppings[j] +", "%> 
+                        <%}}%>
+                    </td>
+                </tr>
+            <%}%>
+        </table>
+    </body>
+</html>

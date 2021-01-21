@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Place Order</title>
+        <style>
+            ul{
+                list-style-type: none;
+            }
+            .singleRow
+            {
+                float: left;
+                width: 40%;
+            }
+            .tripleRow
+            {
+                float: left;
+                width: 30%;
+            }
+            form{
+                width: 70%;
+            }
+        </style>
+        <%# This is the function used to check the toppings array
+            for sticky form implementation on checkboxes
+            %>
+        <% 
+        toppingCheck = function(topping) {
+           if(data.toppings.includes(topping))
+           {%>
+               <%="checked=checked"%>
+           <%}
+       }
+       %>
+    </head>
+    <body>
+        <form method="POST" action='/submit'>
+            <fieldset>
+                <legend>New Order</legend>
+            
+            <fieldset>
+                <legend>Customer Information</legend>
+                <fieldset>
+                    <legend>Name</legend>
+                    <ul>
+                        <li>
+                            <label for="fName">First Name: </label>
+                            <input type="text" minlength="2" id="fName" name="fName" value="<%=data.fName%>" required>
+                        </li>
+                        <li>
+                            <label for="lName">Last Name: </label>
+                            <input type="text" minlength="2" id="lName" name="lName" value="<%=data.lName%>" required>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Address</legend>
+                    <ul>
+                        <li>
+                            <label for="streetNumber">Street Number: </label>
+                            <input type="text" id="streetNumber" name="streetNumber" value="<%=data.streetNumber%>"required>
+                        </li>
+                        <li>
+                            <label for="streetName">Street Name</label>
+                            <input type="text" id="streetName" name="streetName" value="<%=data.streetName%>"required>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Contact Information</legend>
+                    <ul>
+                        <li>
+                            <label for="email">Email Address: </label>
+                            <input type="email" id="email" name="email" value="<%=data.email%>"required>
+                        </li>
+                        <li>
+                            <label for="telNumber">Telephone number:</label>
+                            <input type="tel" id="telNumber" name="telNumber" value="<%=data.telNumber%>"required>
+                        </li>
+                    </ul>
+                </fieldset>
+            </fieldset>
+                <fieldset>
+                    <legend>Number of pizzas</legend>
+                    <input type="number" id="numberOfPizzas" name="numberOfPizzas"
+                        min="1" max="9" value="<%=data.numberOfPizzas%>" required>
+                </fieldset>
+                <fieldset>
+                    <legend>Size</legend>
+                    <ul>
+                        <li><input type="radio" id="small" name="size" value="small" 
+                        <%if(data.size == "small"){%><%="checked=checked"%><%}%> >
+                        <label for="small">Small</label></li>
+
+                        <li><input type="radio" id="medium" name="size" value="medium" 
+                            <%if(data.size == "medium"){%><%="checked=checked"%><%}%>>
+                        <label for="medium">Medium</label></li>
+
+                        <li><input type="radio" id="large" name="size" value="large" 
+                            <%if(data.size == "large"){%><%="checked=checked"%><%}%>>
+                        <label for="large">Large</label></li>
+
+                        <li><input type="radio" id="extraLarge" name="size" value="extraLarge"
+                            <%if(data.size == "extraLarge"){%><%="checked=checked"%><%}%>>
+                        <label for="extraLarge">Extra Large</label></li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Dough</legend>
+                    <div class="singleRow">
+                        <ul>
+                            <li>
+                                <input type="radio" id="regular" name="dough" value="regular" 
+                                <%if(data.dough == "regular"){%><%="checked=checked"%><%}%>>
+                                <label for="regular">Regular</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="rThinCrust" name="dough" value="rThinCrust"
+                                <%if(data.dough == "rThinCrust"){%><%="checked=checked"%><%}%>>
+                                <label for ="rThinCrust">Regular Thin Crust</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="rThickCrust" name="dough" value="rThickCrust"
+                                <%if(data.dough == "rThickCrust"){%><%="checked=checked"%><%}%>>
+                                <label for="rThickCrust">Regular Thick Crust</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="singleRow">
+                        <ul>
+                            <li>
+                                <input type="radio" id="wholeWheat" name="dough" value="wholeWheat"
+                                <%if(data.dough == "wholeWheat"){%><%="checked=checked"%><%}%>>
+                                <label for="wholeWheat">Whole Wheat</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="wThinCrust" name="dough" value="wThinCrust"
+                                <%if(data.dough == "wThinCrust"){%><%="checked=checked"%><%}%>>
+                                <label for="wThinCrust">Whole Wheat Thin Crust</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="wThickCrust" name="dough" value="wThickCrust"
+                                <%if(data.dough == "wThickCrust"){%><%="checked=checked"%><%}%>>
+                                <label for="wThickCrust">Whole Wheat Thick Crust</label>
+                            </li>
+                        </ul>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Sauce</legend>
+                    <div class="singleRow">
+                        <ul>
+                            <li>
+                                <input type="radio" id="italian" name="sauce" value="italian" 
+                                <%if(data.sauce == "italian"){%><%="checked=checked"%><%}%>>
+                                <label for="italian">Home-Style Italian Sauce</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="buffalo" name="sauce" value="buffalo"
+                                <%if(data.sauce == "buffalo"){%><%="checked=checked"%><%}%>>
+                                <label for="buffalo">Buffalo Blue Cheese</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="garlic" name="sauce" value="garlic"
+                                <%if(data.sauce == "garlic"){%><%="checked=checked"%><%}%>>
+                                <label for="garlic">Creamy Garlic</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="chipotle" name="sauce" value="chipotle"
+                                <%if(data.sauce == "chipotle"){%><%="checked=checked"%><%}%>>
+                                <label for="chipotle">Chipotle</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="pesto" name="sauce" value="pesto"
+                                <%if(data.sauce == "pesto"){%><%="checked=checked"%><%}%>>
+                                <label for="pesto">Pesto</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="singleRow">
+                        <ul>
+                            <li>
+                                <input type="radio" id="spicy" name="sauce" value="spicy"
+                                <%if(data.sauce == "spicy"){%><%="checked=checked"%><%}%>>
+                                <label for="spicy">Spicy</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="thai" name="sauce" value="thai"
+                                <%if(data.sauce == "thai"){%><%="checked=checked"%><%}%>>
+                                <label for="thai">Sweet Chili Thai</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="tandoori" name="sauce" value="tandoori"
+                                <%if(data.sauce == "tandoori"){%><%="checked=checked"%><%}%>>
+                                <label for="tandoori">Tandoori</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="texas" name="sauce" value="texas"
+                                <%if(data.sauce == "texas"){%><%="checked=checked"%><%}%>>
+                                <label for="texas">Texas</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="noSauce" name="sauce" value="none"
+                                <%if(data.sauce == "noSauce"){%><%="checked=checked"%><%}%>>
+                                <label for="noSauce">None</label>
+                            </li>
+                        </ul>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Cheese</legend>
+                    <ul>
+                        <li>
+                            <input type="radio" id="mozzarella" name="cheese" value="mozzarella" 
+                            <%if(data.cheese == "mozzarella"){%><%="checked=checked"%><%}%>>
+                            <label for="mozzarella">Mozzarella</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="dairyFree" name="cheese" value="dairyFree"
+                            <%if(data.cheese == "dairyFree"){%><%="checked=checked"%><%}%>>
+                            <label for="dairyFree">Dairy Free</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="fourCheese" name="cheese" value="fourCheese"
+                            <%if(data.cheese == "fourCheese"){%><%="checked=checked"%><%}%>>
+                            <label for="fourCheese">Four Cheese blend</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="noCheese" name="cheese" value="none"
+                            <%if(data.cheese == "noCheese"){%><%="checked=checked"%><%}%>>
+                            <label for="noCheese">None</label>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Toppings</legend>
+                        <div class="tripleRow">
+                            <ul>
+                                
+                                <li>
+                                    
+                                    <input type="checkbox" id="anchovies" name="toppings" value="anchovies"
+                                    <%toppingCheck("anchovies")%>>
+                                    <label for="anchovies">Anchovies</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="broccoli" name="toppings" value="broccoli"
+                                    <%toppingCheck("broccoli")%>>
+                                    <label for="broccoli">Broccoli</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="caramelizedOnions" name="toppings" value="caramelizedOnions"
+                                    <%toppingCheck("caramelizedOnions")%>>
+                                    <label for="caramelizedOnions">Caramelized Onions</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="chipotleSteak" name="toppings" value="chipotleSteak"
+                                    <%toppingCheck("chipotleSteak")%>>
+                                    <label for="chipotleSteak">Chipotle Steak</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="greenOlive" name="toppings" value="greenOlive"
+                                    <%toppingCheck("greenOlive")%>>
+                                    <label for="greenOlive">Green Olives</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="grilledZuchini" name="toppings" value="grilledZuchini"
+                                    <%toppingCheck("grilledZuchini")%>>
+                                    <label for="grilledZuchini">Grilled Zuchini</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="italianHam" name="toppings" value="italianHam"
+                                    <%toppingCheck("italianHam")%>>
+                                    <label for="italianHam">Italian Ham</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="mushrooms" name="toppings" value="mushrooms"
+                                    <%toppingCheck("mushrooms")%>>
+                                    <label for="mushrooms">Mushrooms</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="pineapple" name="toppings" value="pineapple"
+                                    <%toppingCheck("pineapple")%>>
+                                    <label for="pineapple">Pineapple</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="redOnion" name="toppings" value="redOnion"
+                                    <%toppingCheck("redOnion")%>>
+                                    <label for="redOnion">Red Onions</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="salami" name="toppings" value="salami"
+                                    <%toppingCheck("salami")%>>
+                                    <label for="salami">Salami</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="spinach" name="toppings" value="spinach"
+                                    <%toppingCheck("spinach")%>>
+                                    <label for="spinach">Spinach</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tripleRow">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="artichoke" name="toppings" value="artichoke"
+                                    <%toppingCheck("artichoke")%>>
+                                    <label for="artichoke">Artichoke</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="bruschetta" name="toppings" value="bruschetta"
+                                    <%toppingCheck("bruschetta")%>>
+                                    <label for="bruschetta">Bruschetta</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="cilantro" name="toppings" value="cilantro"
+                                    <%toppingCheck("cilantro")%>>
+                                    <label for="cilantro">Cilantro</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="chorizo" name="toppings" value="chorizo"
+                                    <%toppingCheck("chorizo")%>>
+                                    <label for="chorizo">Chorizo Sausage</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="greenPeppers" name="toppings" value="greenPeppers"
+                                    <%toppingCheck("greenPeppers")%>>
+                                    <label for="greenPeppers">Green Peppers</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="groundBeef" name="toppings" value="groundBeef"
+                                    <%toppingCheck("groundBeef")%>>
+                                    <label for="groundBeef">Ground Beef</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="jalpenos" name="toppings" value="jalpenos"
+                                    <%toppingCheck("jalapenos")%>>
+                                    <label for="jalpenos">Jalapenos</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="nyPepperoni" name="toppings" value="nyPepperoni"
+                                    <%toppingCheck("nyPepperoni")%>>
+                                    <label for="nyPepperoni">New York Style Pepperoni</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="veganChorizo" name="toppings" value="veganChorizo"
+                                    <%toppingCheck("veganChorizo")%>>
+                                    <label for="veganChorizo">Plant-Based Chorizo Crumble</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="roastedGarlic" name="toppings" value="roastedGarlic"
+                                    <%toppingCheck("roastedGarlic")%>>
+                                    <label for="roastedGarlic">Roasted Garlic</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="italianSausage" name="toppings" value="italianSausage"
+                                    <%toppingCheck("italianSausage")%>>
+                                    <label for="italianSausage">Spicy Italian Sausage</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="sundriedTomatos" name="toppings" value="sundriedTomatos"
+                                    <%toppingCheck("sundriedTomatos")%>>
+                                    <label for="sundriedTomatos">Sun-Dried Tomatos</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tripleRow">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="bacon" name="toppings" value="bacon"
+                                    <%toppingCheck("bacon")%>>
+                                    <label for="bacon">Bacon Strips</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="buffaloChicken" name="toppings" value="buffaloChicken"
+                                    <%toppingCheck("buffaloChicken")%>>
+                                    <label for="buffaloChicken">Buffalo Chicken</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="chipotleChicken" name="toppings" value="chipotleChicken"
+                                    <%toppingCheck("chipotleChicken")%>>
+                                    <label for="chipotleChicken">Chipotle Chicken</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="roastedRedPeppers" name="toppings" value="roastedRedPeppers"
+                                    <%toppingCheck("roastedRedPeppers")%>>
+                                    <label for="roastedRedPeppers">Fire-Roasted Red Peppers</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="grilledChicken" name="toppings" value="grilledChicken"
+                                    <%toppingCheck("grilledChicken")%>>
+                                    <label for="grilledChicken">Grilled Chicken</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="bananaPeppers" name="toppings" value="bananaPeppers"
+                                    <%toppingCheck("bananaPeppers")%>>
+                                    <label for="bananaPeppers">Banana Peppers</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="kalmataOlives" name="toppings" value="kalmataOlives"
+                                    <%toppingCheck("kalmataOlives")%>>
+                                    <label for="kalmataOlives">Kalmata Olives</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="pepperoni" name="toppings" value="pepperoni"
+                                    <%toppingCheck("pepperoni")%>>
+                                    <label for="pepperoni">Pepperoni</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="veganPepperoni" name="toppings" value="veganPepperoni"
+                                    <%toppingCheck("veganPepperoni")%>>
+                                    <label for="veganPepperoni">Plant-Based Pepperoni</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="romaTomato" name="toppings" value="romaTomato"
+                                    <%toppingCheck("romaTomato")%>>
+                                    <label for="romaTomato">Roma Tomat</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="steakStrips" name="toppings" value="steakStrips"
+                                    <%toppingCheck("steakStrips")%>>
+                                    <label for="steakStrips">Steak Strips</label>
+                                </li>
+                            </ul>
+                        </div>
+                
+            
+            </fieldset>
+            <% if(errors.length > 0){%>
+                <ul>
+                <%for(let i = 0; i < errors.length; i++){ %>
+                    <li><%=errors[i]%></li>
+                <%}%>
+            <%}%>
+            <input type="submit" value="Go to checkout">
+        </fieldset>
+        </form>
+    </body>
+</html>
